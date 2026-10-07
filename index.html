@@ -22,11 +22,11 @@
     </header>
 
     <nav class="section-tabs" role="tablist" aria-label="Rubriques du site">
-        <button class="section-tab" id="tab-lessons" type="button" role="tab" aria-selected="true" aria-controls="panel-lessons">
-            Les 10 leçons
-        </button>
-        <button class="section-tab" id="tab-basics" type="button" role="tab" aria-selected="false" aria-controls="panel-basics" tabindex="-1">
+        <button class="section-tab" id="tab-basics" type="button" role="tab" aria-selected="true" aria-controls="panel-basics">
             Les bases du Touch
+        </button>
+        <button class="section-tab" id="tab-lessons" type="button" role="tab" aria-selected="false" aria-controls="panel-lessons" tabindex="-1">
+            Les 10 leçons
         </button>
     </nav>
 
@@ -42,7 +42,7 @@
         </aside>
 
         <div class="feed-column">
-            <section class="tab-panel lessons-panel" id="panel-lessons" role="tabpanel" aria-labelledby="tab-lessons">
+            <section class="tab-panel lessons-panel" id="panel-lessons" role="tabpanel" aria-labelledby="tab-lessons" hidden>
                 <div class="search-bar">
                     <label class="search-box">
                         <span class="search-icon" aria-hidden="true">⌕</span>
@@ -54,7 +54,7 @@
                 <p id="empty-state" class="empty-state" hidden>Aucune leçon ne correspond à ta recherche.</p>
             </section>
 
-            <section class="tab-panel basics-panel" id="panel-basics" role="tabpanel" aria-labelledby="tab-basics" hidden>
+            <section class="tab-panel basics-panel" id="panel-basics" role="tabpanel" aria-labelledby="tab-basics">
                 <header class="basics-hero">
                     <p class="basics-eyebrow">Découvrir le Touch</p>
                     <h2>Les bases du Touch</h2>

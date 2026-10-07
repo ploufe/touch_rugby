@@ -9,7 +9,7 @@
     const tabs = [...document.querySelectorAll('[role="tab"]')];
     const searchState = { query: "" };
     const savedLessons = new Set();
-    let activeTab = "lessons";
+    let activeTab = "basics";
     let videoObserver;
 
     if (!Array.isArray(window.LESSONS) || window.LESSONS.length === 0) {
@@ -324,5 +324,5 @@
 
     renderNavigation();
     renderPosts();
-    setActiveTab("lessons");
+    setActiveTab("basics");
 })();
