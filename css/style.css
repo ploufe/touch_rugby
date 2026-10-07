@@ -74,17 +74,10 @@ a {
 }
 
 .brand-name {
-    font-family: "Aptos Display", "Segoe UI", sans-serif;
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: -1px;
-}
-
-.brand-name {
     max-width: 390px;
     margin: 0;
     font-family: "Aptos Display", "Segoe UI", sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 800;
     letter-spacing: -.6px;
 }
@@ -94,7 +87,7 @@ a {
     align-items: center;
     gap: 10px;
     color: var(--green);
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 700;
     white-space: nowrap;
 }
@@ -127,7 +120,7 @@ a {
     align-items: center;
     justify-content: space-between;
     color: var(--ink);
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 700;
 }
 
@@ -137,7 +130,7 @@ a {
     border-radius: 999px;
     background: #e8ecdf;
     color: var(--green);
-    font-size: 10px;
+    font-size: 12px;
     text-align: center;
 }
 
@@ -157,7 +150,7 @@ a {
     padding: 5px 9px;
     border-radius: 10px;
     color: #65716a;
-    font-size: 11px;
+    font-size: 14px;
     transition: background 160ms ease, color 160ms ease;
 }
 
@@ -177,7 +170,7 @@ a {
     border-radius: 9px;
     background: #ebeee8;
     color: #66756a;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
 }
 
@@ -196,51 +189,16 @@ a {
     min-width: 0;
 }
 
-.filter-bar {
+.search-bar {
     display: flex;
-    min-height: 43px;
     align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 14px;
-}
-
-.filter-chips {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    scrollbar-width: none;
-}
-
-.filter-chips::-webkit-scrollbar {
-    display: none;
-}
-
-.filter-chip {
-    flex: 0 0 auto;
-    padding: 7px 11px;
-    border: 1px solid #e5e9e0;
-    border-radius: 999px;
-    background: transparent;
-    color: #65716a;
-    cursor: pointer;
-    font-size: 9px;
-    transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
-}
-
-.filter-chip:hover {
-    border-color: #aebca8;
-}
-
-.filter-chip[aria-pressed="true"] {
-    border-color: var(--green-dark);
-    background: var(--green-dark);
-    color: white;
+    justify-content: flex-end;
+    margin-bottom: 18px;
 }
 
 .search-box {
     display: flex;
-    min-width: 120px;
+    width: min(100%, 340px);
     align-items: center;
     gap: 5px;
     padding: 5px 9px;
@@ -256,11 +214,11 @@ a {
 }
 
 .search-box input {
-    width: 92px;
+    width: 100%;
     border: 0;
     background: transparent;
     color: var(--ink);
-    font-size: 10px;
+    font-size: 14px;
     outline: none;
 }
 
@@ -311,14 +269,14 @@ a {
 
 .profile-name {
     margin: 0;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 700;
 }
 
 .post-date {
     margin: 3px 0 0;
     color: #909991;
-    font-size: 9px;
+    font-size: 12px;
 }
 
 .post-lesson-tag {
@@ -326,7 +284,7 @@ a {
     border-radius: 999px;
     background: #f1f4eb;
     color: var(--green);
-    font-size: 8px;
+    font-size: 12px;
     font-weight: 700;
     white-space: nowrap;
 }
@@ -389,7 +347,7 @@ a {
     border-radius: 999px;
     background: rgb(24 34 28 / 70%);
     color: #fff;
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 600;
 }
 
@@ -470,7 +428,7 @@ a {
 
 .media-indicator {
     color: #a0a8a0;
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 600;
 }
 
@@ -483,7 +441,7 @@ a {
     background: transparent;
     color: #66736b;
     cursor: pointer;
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 600;
 }
 
@@ -503,7 +461,7 @@ a {
 .post-caption h3 {
     margin: 2px 0 8px;
     font-family: "Aptos Display", "Segoe UI", sans-serif;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 800;
     letter-spacing: -.25px;
 }
@@ -512,8 +470,8 @@ a {
     overflow: hidden;
     margin: 0;
     color: #5d6961;
-    font-size: 11px;
-    line-height: 1.75;
+    font-size: 16px;
+    line-height: 1.7;
     white-space: pre-line;
     overflow-wrap: anywhere;
 }
@@ -532,7 +490,7 @@ a {
     background: none;
     color: var(--green);
     cursor: pointer;
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 700;
 }
 
@@ -545,14 +503,14 @@ a {
 
 .hashtag {
     color: #718e60;
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 600;
 }
 
 .empty-state {
     padding: 40px 15px;
     color: var(--muted);
-    font-size: 12px;
+    font-size: 15px;
     text-align: center;
 }
 
@@ -585,7 +543,7 @@ a {
 
     .topbar-link {
         gap: 5px;
-        font-size: 9px;
+        font-size: 11px;
     }
 
     .brand {
@@ -595,7 +553,7 @@ a {
 
     .brand-name {
         max-width: 190px;
-        font-size: 12px;
+        font-size: 15px;
         line-height: 1.2;
     }
 
@@ -649,20 +607,11 @@ a {
         flex-basis: 25px;
     }
 
-    .filter-bar {
-        flex-wrap: wrap;
-        margin-bottom: 12px;
-    }
-
-    .filter-chips {
-        width: 100%;
+    .lesson-link {
+        font-size: 13px;
     }
 
     .search-box {
-        width: 100%;
-    }
-
-    .search-box input {
         width: 100%;
     }
 

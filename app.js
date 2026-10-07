@@ -1,12 +1,10 @@
 (() => {
     const posts = document.querySelector("#posts");
     const lessonList = document.querySelector("#lesson-list");
-    const filters = document.querySelector("#filters");
     const search = document.querySelector("#search");
     const emptyState = document.querySelector("#empty-state");
     const lessonCount = document.querySelector("#lesson-count");
-    const categoryNames = ["Tout", "Attaque", "Défense", "Règles"];
-    const categoryState = { active: "Tout", query: "" };
+    const searchState = { query: "" };
     const savedLessons = new Set();
 
     if (!Array.isArray(window.LESSONS) || window.LESSONS.length === 0) {
@@ -39,11 +37,9 @@
     }
 
     function scrollToLesson(number) {
-        if (categoryState.active !== "Tout" || categoryState.query) {
-            categoryState.active = "Tout";
-            categoryState.query = "";
+        if (searchState.query) {
+            searchState.query = "";
             search.value = "";
-            updateFilterButtons();
             renderPosts();
         }
         requestAnimationFrame(() => {
@@ -67,27 +63,6 @@
             });
             item.append(link);
             lessonList.append(item);
-        }
-    }
-
-    function renderFilters() {
-        for (const category of categoryNames) {
-            const button = createElement("button", "filter-chip", category);
-            button.type = "button";
-            button.dataset.category = category;
-            button.setAttribute("aria-pressed", String(category === categoryState.active));
-            button.addEventListener("click", () => {
-                categoryState.active = category;
-                updateFilterButtons();
-                renderPosts();
-            });
-            filters.append(button);
-        }
-    }
-
-    function updateFilterButtons() {
-        for (const button of filters.querySelectorAll(".filter-chip")) {
-            button.setAttribute("aria-pressed", String(button.dataset.category === categoryState.active));
         }
     }
 
@@ -239,11 +214,10 @@
     }
 
     function renderPosts() {
-        const query = categoryState.query.trim().toLocaleLowerCase("fr");
+        const query = searchState.query.trim().toLocaleLowerCase("fr");
         const visibleLessons = lessons.filter((lesson) => {
-            const matchesCategory = categoryState.active === "Tout" || lesson.category === categoryState.active;
             const searchableText = `${lesson.title} ${lesson.caption} ${lesson.hashtags.join(" ")}`.toLocaleLowerCase("fr");
-            return matchesCategory && (!query || searchableText.includes(query));
+            return !query || searchableText.includes(query);
         });
 
         posts.replaceChildren(...visibleLessons.map(createPost));
@@ -251,11 +225,10 @@
     }
 
     search.addEventListener("input", () => {
-        categoryState.query = search.value;
+        searchState.query = search.value;
         renderPosts();
     });
 
     renderNavigation();
-    renderFilters();
     renderPosts();
 })();
