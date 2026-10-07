@@ -22,27 +22,39 @@
     </header>
 
     <nav class="section-tabs" role="tablist" aria-label="Rubriques du site">
-        <button class="section-tab" id="tab-basics" type="button" role="tab" aria-selected="true" aria-controls="panel-basics">
-            Les bases du Touch
+        <button class="section-tab" id="tab-lessons" type="button" role="tab" aria-selected="true" aria-controls="panel-lessons">
+            Les 10 leçons
         </button>
-        <button class="section-tab" id="tab-videos" type="button" role="tab" aria-selected="false" aria-controls="panel-videos" tabindex="-1">
-            Les vidéos
+        <button class="section-tab" id="tab-basics" type="button" role="tab" aria-selected="false" aria-controls="panel-basics" tabindex="-1">
+            Les bases du Touch
         </button>
     </nav>
 
-    <main class="page-layout is-basics">
-        <aside class="left-sidebar" id="video-sidebar" aria-label="Navigation des vidéos" hidden>
-            <nav class="lesson-nav" aria-label="Leçons en vidéo">
+    <main class="page-layout is-lessons">
+        <aside class="left-sidebar" id="lesson-sidebar" aria-label="Navigation des leçons">
+            <nav class="lesson-nav" aria-label="Toutes les leçons">
                 <div class="nav-heading">
-                    <span>Les vidéos</span>
-                    <span id="video-count" class="count-pill">0</span>
+                    <span>Le parcours</span>
+                    <span id="lesson-count" class="count-pill">10</span>
                 </div>
-                <ol id="video-lesson-list" class="lesson-list"></ol>
+                <ol id="lesson-list" class="lesson-list"></ol>
             </nav>
         </aside>
 
         <div class="feed-column">
-            <section class="tab-panel basics-panel" id="panel-basics" role="tabpanel" aria-labelledby="tab-basics">
+            <section class="tab-panel lessons-panel" id="panel-lessons" role="tabpanel" aria-labelledby="tab-lessons">
+                <div class="search-bar">
+                    <label class="search-box">
+                        <span class="search-icon" aria-hidden="true">⌕</span>
+                        <span class="visually-hidden">Rechercher une leçon</span>
+                        <input id="search" type="search" placeholder="Chercher..." autocomplete="off">
+                    </label>
+                </div>
+                <div id="posts" class="posts" aria-live="polite"></div>
+                <p id="empty-state" class="empty-state" hidden>Aucune leçon ne correspond à ta recherche.</p>
+            </section>
+
+            <section class="tab-panel basics-panel" id="panel-basics" role="tabpanel" aria-labelledby="tab-basics" hidden>
                 <header class="basics-hero">
                     <p class="basics-eyebrow">Découvrir le Touch</p>
                     <h2>Les bases du Touch</h2>
@@ -85,17 +97,6 @@
                 <p class="basics-source">Résumé adapté de l'article <a href="https://fr.wikipedia.org/wiki/Touch_rugby" target="_blank" rel="noopener noreferrer">Touch rugby sur Wikipédia</a>. Les règles peuvent varier selon le règlement de la compétition.</p>
             </section>
 
-            <section class="tab-panel videos-panel" id="panel-videos" role="tabpanel" aria-labelledby="tab-videos" hidden>
-                <div class="search-bar">
-                    <label class="search-box">
-                        <span class="search-icon" aria-hidden="true">⌕</span>
-                        <span class="visually-hidden">Rechercher une leçon ou une vidéo</span>
-                        <input id="search" type="search" placeholder="Chercher une leçon..." autocomplete="off">
-                    </label>
-                </div>
-                <div id="video-lessons" class="video-lessons" aria-live="polite"></div>
-                <p id="empty-state" class="empty-state" hidden>Aucune vidéo ne correspond à ta recherche.</p>
-            </section>
         </div>
     </main>
 </body>

@@ -366,73 +366,6 @@ a {
     gap: 18px;
 }
 
-.video-lessons {
-    display: grid;
-    gap: 18px;
-}
-
-.video-lesson-card {
-    min-width: 0;
-    padding: 18px;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: var(--white);
-    box-shadow: var(--shadow);
-    scroll-margin-top: 90px;
-}
-
-.video-lesson-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.video-lesson-header h2 {
-    margin: 0;
-    font-family: "Aptos Display", "Segoe UI", sans-serif;
-    font-size: 20px;
-}
-
-.video-lesson-summary {
-    margin: 10px 0 15px;
-    color: #5d6961;
-    font-size: 15px;
-    line-height: 1.6;
-    white-space: pre-line;
-}
-
-.video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-    gap: 14px;
-}
-
-.video-item {
-    min-width: 0;
-    margin: 0;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 13px;
-    background: #111;
-}
-
-.video-item video {
-    display: block;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background: #111;
-    object-fit: contain;
-}
-
-.video-item figcaption {
-    padding: 9px 11px;
-    background: var(--white);
-    color: var(--muted);
-    font-size: 12px;
-    font-weight: 700;
-}
-
 .post-card {
     overflow: hidden;
     border: 1px solid #e9ece5;
@@ -810,14 +743,6 @@ a {
 
     .basics-card {
         padding: 17px;
-    }
-
-    .video-lesson-card {
-        padding: 14px;
-    }
-
-    .video-lesson-header h2 {
-        font-size: 17px;
     }
 
     .left-sidebar {
