@@ -17,12 +17,7 @@
         return;
     }
 
-    const lessons = [...window.LESSONS].sort((a, b) => {
-        if (a.publishedAt && b.publishedAt && a.publishedAt !== b.publishedAt) {
-            return b.publishedAt.localeCompare(a.publishedAt);
-        }
-        return b.number - a.number;
-    });
+    const lessons = [...window.LESSONS].sort((a, b) => a.number - b.number);
 
     const padNumber = (number) => String(number).padStart(2, "0");
 
@@ -265,8 +260,7 @@
             }
             caption.append(hashtagList);
         }
-        caption.append(createElement("div", "post-divider"));
-        post.append(header, media, actions, caption);
+        post.append(header, caption, media, actions);
         return post;
     }
 
