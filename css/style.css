@@ -534,8 +534,12 @@ a {
 
 @media (max-width: 1100px) {
     .page-layout {
-        grid-template-columns: 190px minmax(0, 760px);
+        grid-template-columns: 190px minmax(0, 1fr);
         gap: 30px;
+    }
+
+    .feed-column {
+        max-width: 760px;
     }
 }
 
