@@ -80,15 +80,13 @@ a {
     letter-spacing: -1px;
 }
 
-.brand-name span,
-.title-period {
-    color: var(--orange);
-}
-
-.topbar-note {
+.brand-name {
+    max-width: 390px;
     margin: 0;
-    color: var(--muted);
-    font-size: 12px;
+    font-family: "Aptos Display", "Segoe UI", sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -.6px;
 }
 
 .topbar-link {
@@ -96,8 +94,9 @@ a {
     align-items: center;
     gap: 10px;
     color: var(--green);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .page-layout {
@@ -119,39 +118,11 @@ a {
     flex-direction: column;
 }
 
-.eyebrow {
-    color: #879289;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-}
-
-.welcome-block h1,
-.feed-intro h2 {
-    font-family: "Aptos Display", "Segoe UI", Arial, sans-serif;
-    letter-spacing: -1.7px;
-}
-
-.welcome-block h1 {
-    margin: 12px 0 8px;
-    font-size: 32px;
-    line-height: 1.08;
-}
-
-.welcome-block > p,
-.feed-intro > div > p {
-    margin: 0;
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.7;
-}
-
 .lesson-nav {
-    margin-top: 34px;
+    margin-top: 0;
 }
 
-.nav-heading,
-.section-label {
+.nav-heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -221,146 +192,8 @@ a {
     white-space: nowrap;
 }
 
-.sidebar-foot {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: auto;
-    padding-top: 28px;
-    color: #8a948c;
-    font-size: 10px;
-}
-
-.online-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #8dbb58;
-    box-shadow: 0 0 0 3px #e7efdb;
-}
-
 .feed-column {
     min-width: 0;
-}
-
-.feed-intro {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    margin: 9px 0 25px;
-}
-
-.feed-intro h2 {
-    margin: 6px 0 3px;
-    font-size: 30px;
-    line-height: 1.15;
-}
-
-.feed-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 10px;
-    border: 1px solid #e7ebdf;
-    border-radius: 999px;
-    background: #fafbf7;
-    color: var(--green);
-    font-size: 9px;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.feed-badge span {
-    color: var(--orange);
-    font-size: 13px;
-}
-
-.stories-section {
-    overflow: hidden;
-    margin-bottom: 23px;
-    padding: 15px 16px 13px;
-    border: 1px solid #eaede5;
-    border-radius: 16px;
-    background: #fafbf8;
-}
-
-.section-label {
-    margin-bottom: 13px;
-    font-size: 10px;
-}
-
-.section-label > span + span {
-    color: #929a92;
-    font-size: 9px;
-    font-weight: 500;
-}
-
-.stories {
-    display: flex;
-    gap: 13px;
-    overflow-x: auto;
-    padding: 2px 1px 5px;
-    scrollbar-width: thin;
-    scrollbar-color: #d5ddce transparent;
-}
-
-.story {
-    display: grid;
-    flex: 0 0 53px;
-    justify-items: center;
-    gap: 6px;
-    padding: 0;
-    border: 0;
-    background: none;
-    color: #65716a;
-    cursor: pointer;
-}
-
-.story-ring {
-    display: grid;
-    width: 49px;
-    height: 49px;
-    place-items: center;
-    padding: 3px;
-    border: 1.5px solid #aac27d;
-    border-radius: 50%;
-    background: #fff;
-    transition: border-color 150ms ease, transform 150ms ease;
-}
-
-.story:hover .story-ring,
-.story:focus-visible .story-ring {
-    border-color: var(--green);
-    transform: translateY(-2px);
-}
-
-.story:focus-visible {
-    outline: none;
-}
-
-.story-thumb {
-    display: grid;
-    width: 100%;
-    height: 100%;
-    place-items: center;
-    overflow: hidden;
-    border-radius: 50%;
-    background: #e5ecd9;
-    color: var(--green);
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.story-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.story-label {
-    font-size: 8px;
-    font-weight: 600;
-    white-space: nowrap;
 }
 
 .filter-bar {
@@ -750,12 +583,27 @@ a {
         padding: 0 18px;
     }
 
-    .topbar-note {
-        display: none;
+    .topbar-link {
+        gap: 5px;
+        font-size: 9px;
     }
 
-    .topbar-link {
-        font-size: 10px;
+    .brand {
+        min-width: 0;
+        gap: 7px;
+    }
+
+    .brand-name {
+        max-width: 190px;
+        font-size: 12px;
+        line-height: 1.2;
+    }
+
+    .brand-mark {
+        width: 27px;
+        height: 27px;
+        flex: 0 0 27px;
+        font-size: 18px;
     }
 
     .page-layout {
@@ -766,36 +614,39 @@ a {
     .left-sidebar {
         position: static;
         min-height: 0;
-    }
-
-    .welcome-block {
-        display: none;
+        margin-bottom: 18px;
     }
 
     .lesson-nav {
-        display: none;
+        overflow: hidden;
+        padding: 12px;
+        border: 1px solid #eaede5;
+        border-radius: 14px;
+        background: #fafbf8;
     }
 
-    .sidebar-foot {
-        display: none;
+    .lesson-list {
+        display: flex;
+        overflow-x: auto;
+        gap: 6px;
+        margin-top: 10px;
+        padding-bottom: 3px;
+        scrollbar-width: thin;
+        scrollbar-color: #d5ddce transparent;
     }
 
-    .feed-intro {
-        margin: 0 2px 19px;
+    .lesson-link {
+        min-height: 34px;
+        flex: 0 0 auto;
+        gap: 6px;
+        padding: 4px 6px;
+        background: #f0f2ec;
     }
 
-    .feed-intro h2 {
-        font-size: 26px;
-    }
-
-    .feed-badge {
-        padding: 7px 8px;
-        font-size: 8px;
-    }
-
-    .stories-section {
-        margin-bottom: 17px;
-        padding: 13px 12px 10px;
+    .lesson-number {
+        width: 25px;
+        height: 25px;
+        flex-basis: 25px;
     }
 
     .filter-bar {

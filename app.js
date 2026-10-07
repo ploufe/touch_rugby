@@ -1,7 +1,6 @@
 (() => {
     const posts = document.querySelector("#posts");
     const lessonList = document.querySelector("#lesson-list");
-    const stories = document.querySelector("#stories");
     const filters = document.querySelector("#filters");
     const search = document.querySelector("#search");
     const emptyState = document.querySelector("#empty-state");
@@ -39,11 +38,6 @@
         }).format(parsed);
     }
 
-    function lessonThumbnail(lesson) {
-        const firstImage = lesson.media.find((media) => media.type === "image");
-        return firstImage?.src ?? lesson.media.find((media) => media.poster)?.poster ?? "";
-    }
-
     function scrollToLesson(number) {
         if (categoryState.active !== "Tout" || categoryState.query) {
             categoryState.active = "Tout";
@@ -73,26 +67,6 @@
             });
             item.append(link);
             lessonList.append(item);
-
-            const story = createElement("button", "story");
-            story.type = "button";
-            story.setAttribute("aria-label", `Aller à la leçon ${lesson.number} : ${lesson.title}`);
-            const ring = createElement("span", "story-ring");
-            const thumb = createElement("span", "story-thumb");
-            const imageSource = lessonThumbnail(lesson);
-            if (imageSource) {
-                const image = document.createElement("img");
-                image.src = imageSource;
-                image.alt = "";
-                image.loading = "lazy";
-                thumb.append(image);
-            } else {
-                thumb.textContent = padNumber(lesson.number);
-            }
-            ring.append(thumb);
-            story.append(ring, createElement("span", "story-label", `Leçon ${lesson.number}`));
-            story.addEventListener("click", () => scrollToLesson(lesson.number));
-            stories.append(story);
         }
     }
 
