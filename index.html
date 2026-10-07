@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f4f5ef">
-    <meta name="description" content="Les bases du touch rugby expliquées en 10 leçons.">
+    <meta name="description" content="Les règles essentielles du Touch et les vidéos des 10 leçons, avec un résumé adapté de Wikipédia.">
     <title>Les bases du Touch en 10 leçons</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="lessons-data.js" defer></script>
@@ -21,31 +21,82 @@
         </a>
     </header>
 
-    <main class="page-layout">
-        <aside class="left-sidebar" aria-label="Navigation des leçons">
-            <nav class="lesson-nav" aria-label="Toutes les leçons">
-                <div class="nav-heading">
-                    <span>Le parcours</span>
-                    <span id="lesson-count" class="count-pill">10</span>
-                </div>
-                <ol id="lesson-list" class="lesson-list"></ol>
-            </nav>
+    <nav class="section-tabs" role="tablist" aria-label="Rubriques du site">
+        <button class="section-tab" id="tab-basics" type="button" role="tab" aria-selected="true" aria-controls="panel-basics">
+            Les bases du Touch
+        </button>
+        <button class="section-tab" id="tab-videos" type="button" role="tab" aria-selected="false" aria-controls="panel-videos" tabindex="-1">
+            Les vidéos
+        </button>
+    </nav>
 
+    <main class="page-layout is-basics">
+        <aside class="left-sidebar" id="video-sidebar" aria-label="Navigation des vidéos" hidden>
+            <nav class="lesson-nav" aria-label="Leçons en vidéo">
+                <div class="nav-heading">
+                    <span>Les vidéos</span>
+                    <span id="video-count" class="count-pill">0</span>
+                </div>
+                <ol id="video-lesson-list" class="lesson-list"></ol>
+            </nav>
         </aside>
 
-        <section class="feed-column" id="fil" aria-label="Les leçons">
-            <div class="search-bar">
-                <label class="search-box">
-                    <span class="search-icon" aria-hidden="true">⌕</span>
-                    <span class="visually-hidden">Rechercher une leçon</span>
-                    <input id="search" type="search" placeholder="Chercher..." autocomplete="off">
-                </label>
-            </div>
+        <div class="feed-column">
+            <section class="tab-panel basics-panel" id="panel-basics" role="tabpanel" aria-labelledby="tab-basics">
+                <header class="basics-hero">
+                    <p class="basics-eyebrow">Découvrir le Touch</p>
+                    <h2>Les bases du Touch</h2>
+                    <p>Le Touch est un sport collectif sans plaquage. Les équipes avancent à la main, se défendent en réalisant des touchs et cherchent à marquer des essais.</p>
+                </header>
 
-            <div id="posts" class="posts" aria-live="polite"></div>
-            <p id="empty-state" class="empty-state" hidden>Aucune leçon ne correspond à ta recherche.</p>
-        </section>
+                <div class="basics-grid">
+                    <article class="basics-card">
+                        <span class="basics-card-number">01</span>
+                        <h3>Le but du jeu</h3>
+                        <p>Marquer plus d'essais que l'équipe adverse en aplatissant le ballon derrière sa ligne d'essai. Les passes se font vers l'arrière ou à hauteur du passeur ; le jeu au pied n'est pas autorisé.</p>
+                    </article>
+                    <article class="basics-card">
+                        <span class="basics-card-number">02</span>
+                        <h3>Six touchs pour attaquer</h3>
+                        <p>Un touch léger, annoncé à voix haute, sur un joueur ou sur le ballon arrête la progression. L'équipe a jusqu'à six touchs pour marquer. Au sixième touch, la possession passe à l'adversaire.</p>
+                    </article>
+                    <article class="basics-card">
+                        <span class="basics-card-number">03</span>
+                        <h3>Le rall ball et le mark</h3>
+                        <p>Après un touch, le porteur effectue un rall ball au mark, l'endroit exact du touch. Les défenseurs se replacent à 7 mètres avant de défendre.</p>
+                    </article>
+                    <article class="basics-card">
+                        <span class="basics-card-number">04</span>
+                        <h3>Le Demi et le tap</h3>
+                        <p>Le Demi récupère le ballon après un rall ball. S'il subit un touch avec le ballon, son équipe en perd la possession ; il ne peut pas marquer. Le tap sert notamment à commencer ou reprendre le jeu ; la défense se place à 10 mètres.</p>
+                    </article>
+                    <article class="basics-card">
+                        <span class="basics-card-number">05</span>
+                        <h3>Les équipes et les changements</h3>
+                        <p>Six joueurs de chaque équipe sont sur le terrain. Les remplacements se font dans la zone prévue, sans interrompre le jeu. Les règles de composition des équipes mixtes peuvent varier selon la compétition.</p>
+                    </article>
+                    <article class="basics-card">
+                        <span class="basics-card-number">06</span>
+                        <h3>Les postes</h3>
+                        <p>Au fil des leçons, tu retrouveras les postes middle, link et ailier, ainsi que des principes pour organiser l'attaque et la défense.</p>
+                    </article>
+                </div>
 
+                <p class="basics-source">Résumé adapté de l'article <a href="https://fr.wikipedia.org/wiki/Touch_rugby" target="_blank" rel="noopener noreferrer">Touch rugby sur Wikipédia</a>. Les règles peuvent varier selon le règlement de la compétition.</p>
+            </section>
+
+            <section class="tab-panel videos-panel" id="panel-videos" role="tabpanel" aria-labelledby="tab-videos" hidden>
+                <div class="search-bar">
+                    <label class="search-box">
+                        <span class="search-icon" aria-hidden="true">⌕</span>
+                        <span class="visually-hidden">Rechercher une leçon ou une vidéo</span>
+                        <input id="search" type="search" placeholder="Chercher une leçon..." autocomplete="off">
+                    </label>
+                </div>
+                <div id="video-lessons" class="video-lessons" aria-live="polite"></div>
+                <p id="empty-state" class="empty-state" hidden>Aucune vidéo ne correspond à ta recherche.</p>
+            </section>
+        </div>
     </main>
 </body>
 </html>

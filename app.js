@@ -1,20 +1,29 @@
 (() => {
-    const posts = document.querySelector("#posts");
-    const lessonList = document.querySelector("#lesson-list");
+    const tabs = [...document.querySelectorAll('[role="tab"]')];
+    const pageLayout = document.querySelector(".page-layout");
+    const sidebar = document.querySelector("#video-sidebar");
+    const lessonList = document.querySelector("#video-lesson-list");
+    const videoLessonsContainer = document.querySelector("#video-lessons");
+    const videoCount = document.querySelector("#video-count");
     const search = document.querySelector("#search");
     const emptyState = document.querySelector("#empty-state");
-    const lessonCount = document.querySelector("#lesson-count");
     const searchState = { query: "" };
-    const savedLessons = new Set();
+    let activeTab = "basics";
+    let videoObserver;
 
     if (!Array.isArray(window.LESSONS) || window.LESSONS.length === 0) {
-        console.error("Le catalogue des leçons est vide. Exécutez build_lessons.py.");
+        console.error("Le catalogue des leçons est vide. Exécutez build_lessons.ps1.");
         emptyState.hidden = false;
         emptyState.textContent = "Les leçons n’ont pas pu être chargées. Vérifie le catalogue du site.";
         return;
     }
 
     const lessons = [...window.LESSONS].sort((a, b) => a.number - b.number);
+    const videoLessons = lessons.filter((lesson) => lesson.media.some((item) => item.type === "video"));
+    const videoTotal = videoLessons.reduce(
+        (total, lesson) => total + lesson.media.filter((item) => item.type === "video").length,
+        0,
+    );
 
     const padNumber = (number) => String(number).padStart(2, "0");
 
@@ -36,24 +45,42 @@
         }).format(parsed);
     }
 
+    function setActiveTab(name, moveFocus = false) {
+        activeTab = name;
+        const isVideos = name === "videos";
+        for (const tab of tabs) {
+            const selected = tab.id === `tab-${name}`;
+            tab.setAttribute("aria-selected", String(selected));
+            tab.tabIndex = selected ? 0 : -1;
+            document.querySelector(`#${tab.getAttribute("aria-controls")}`).hidden = !selected;
+            if (selected && moveFocus) tab.focus();
+        }
+        sidebar.hidden = !isVideos;
+        pageLayout.classList.toggle("is-basics", !isVideos);
+        if (!isVideos) {
+            for (const video of videoLessonsContainer.querySelectorAll("video")) video.pause();
+        }
+    }
+
     function scrollToLesson(number) {
         if (searchState.query) {
             searchState.query = "";
             search.value = "";
-            renderPosts();
+            renderVideoLessons();
         }
+        setActiveTab("videos");
         requestAnimationFrame(() => {
-            document.querySelector(`#lesson-${number}`)?.scrollIntoView({ behavior: "smooth" });
+            document.querySelector(`#video-lesson-${number}`)?.scrollIntoView({ behavior: "smooth" });
         });
     }
 
     function renderNavigation() {
-        lessonCount.textContent = String(lessons.length);
+        videoCount.textContent = String(videoTotal);
 
-        for (const lesson of [...lessons].sort((a, b) => a.number - b.number)) {
+        for (const lesson of videoLessons) {
             const item = document.createElement("li");
             const link = createElement("a", "lesson-link");
-            link.href = `#lesson-${lesson.number}`;
+            link.href = `#video-lesson-${lesson.number}`;
             const number = createElement("span", "lesson-number", padNumber(lesson.number));
             const title = createElement("span", "lesson-link-title", lesson.title);
             link.append(number, title);
@@ -66,175 +93,118 @@
         }
     }
 
-    function renderMedia(lesson, mediaItems) {
-        const carousel = createElement("div", "carousel");
-        carousel.setAttribute("role", "group");
-        carousel.setAttribute("aria-label", `Médias de la leçon ${lesson.number}`);
-
-        if (mediaItems.length === 0) {
-            const fallback = createElement("div", "carousel-empty");
-            fallback.append(
-                createElement("span", "", "🏉"),
-                createElement("strong", "", `Leçon ${lesson.number}`),
-            );
-            carousel.append(fallback);
-            return carousel;
-        }
-
-        let activeIndex = 0;
-        const media = createElement("div", "carousel-media");
-        const count = createElement("span", "slide-count");
-        count.setAttribute("aria-live", "polite");
-        const previous = createElement("button", "carousel-arrow prev", "‹");
-        previous.type = "button";
-        previous.setAttribute("aria-label", "Média précédent");
-        previous.hidden = mediaItems.length < 2;
-        const next = createElement("button", "carousel-arrow next", "›");
-        next.type = "button";
-        next.setAttribute("aria-label", "Média suivant");
-        next.hidden = mediaItems.length < 2;
-        const dots = createElement("div", "carousel-dots");
-        dots.setAttribute("aria-label", "Choisir un média");
-
-        function showMedia(index) {
-            activeIndex = (index + mediaItems.length) % mediaItems.length;
-            const item = mediaItems[activeIndex];
-            media.replaceChildren();
-            if (item.type === "video") {
-                const video = document.createElement("video");
-                video.controls = true;
-                video.autoplay = true;
-                video.loop = true;
-                video.muted = true;
-                video.playsInline = true;
-                video.preload = "metadata";
-                video.src = item.src;
-                if (item.poster) video.poster = item.poster;
-                video.setAttribute("aria-label", `Vidéo ${activeIndex + 1} de la leçon ${lesson.number}`);
-                media.append(video);
-                video.play().catch((error) => {
+    function observeVideo(video) {
+        if (videoObserver) {
+            videoObserver.observe(video);
+        } else if (activeTab === "videos") {
+            video.play().catch((error) => {
+                if (error.name !== "AbortError") {
                     console.warn("La lecture automatique de cette vidéo a été bloquée par le navigateur.", error);
-                });
-            } else {
-                const image = document.createElement("img");
-                image.src = item.src;
-                image.alt = `Leçon ${lesson.number}, diapositive ${activeIndex + 1}`;
-                image.loading = activeIndex === 0 ? "eager" : "lazy";
-                media.append(image);
-            }
-            count.textContent = `${activeIndex + 1} / ${mediaItems.length}`;
-            for (const [dotIndex, dot] of [...dots.children].entries()) {
-                dot.setAttribute("aria-current", String(dotIndex === activeIndex));
-            }
-        }
-
-        mediaItems.forEach((_, index) => {
-            const dot = createElement("button", "carousel-dot");
-            dot.type = "button";
-            dot.setAttribute("aria-label", `Afficher le média ${index + 1}`);
-            dot.addEventListener("click", () => showMedia(index));
-            dots.append(dot);
-        });
-        previous.addEventListener("click", () => showMedia(activeIndex - 1));
-        next.addEventListener("click", () => showMedia(activeIndex + 1));
-        carousel.append(media, count, previous, next, dots);
-        showMedia(0);
-        return carousel;
-    }
-
-    function createPost(lesson) {
-        const post = createElement("article", "post-card");
-        post.id = `lesson-${lesson.number}`;
-
-        const header = createElement("header", "post-header");
-        const profile = createElement("div", "post-profile");
-        profile.append(
-            createElement("span", "profile-avatar", "↗"),
-        );
-        const profileText = document.createElement("div");
-        profileText.append(
-            createElement("p", "profile-name", "Touch Rugby Classroom"),
-            createElement("p", "post-date", formatDate(lesson.publishedAt) || `Leçon ${lesson.number}`),
-        );
-        profile.append(profileText);
-        header.append(
-            profile,
-            createElement("span", "post-lesson-tag", lesson.category),
-        );
-
-        const media = renderMedia(lesson, lesson.media);
-        const actions = createElement("div", "post-actions");
-        const imageCount = lesson.media.filter((item) => item.type === "image").length;
-        const videoCount = lesson.media.filter((item) => item.type === "video").length;
-        const mediaSummary = [
-            imageCount ? `${imageCount} image${imageCount === 1 ? "" : "s"}` : "",
-            videoCount ? `${videoCount} vidéo${videoCount === 1 ? "" : "s"}` : "",
-        ].filter(Boolean).join(" · ");
-        actions.append(createElement("span", "media-indicator", mediaSummary));
-
-        const save = createElement("button", "save-button");
-        save.type = "button";
-        save.setAttribute("aria-pressed", String(savedLessons.has(lesson.number)));
-        const saveIcon = createElement("span", "save-icon", savedLessons.has(lesson.number) ? "★" : "☆");
-        saveIcon.setAttribute("aria-hidden", "true");
-        const saveLabel = createElement("span", "", savedLessons.has(lesson.number) ? "À revoir" : "Garder en tête");
-        save.append(saveIcon, saveLabel);
-        save.addEventListener("click", () => {
-            if (savedLessons.has(lesson.number)) {
-                savedLessons.delete(lesson.number);
-            } else {
-                savedLessons.add(lesson.number);
-            }
-            const isSaved = savedLessons.has(lesson.number);
-            save.setAttribute("aria-pressed", String(isSaved));
-            saveIcon.textContent = isSaved ? "★" : "☆";
-            saveLabel.textContent = isSaved ? "À revoir" : "Garder en tête";
-        });
-        actions.append(save);
-
-        const caption = createElement("div", "post-caption");
-        caption.append(createElement("h3", "", `Leçon ${padNumber(lesson.number)} · ${lesson.title}`));
-        const captionCopy = createElement("p", "caption-copy is-collapsed", lesson.caption);
-        caption.append(captionCopy);
-        if (lesson.caption.length > 220) {
-            const expand = createElement("button", "expand-button", "Lire la suite");
-            expand.type = "button";
-            expand.setAttribute("aria-expanded", "false");
-            expand.addEventListener("click", () => {
-                const isExpanded = expand.getAttribute("aria-expanded") === "true";
-                expand.setAttribute("aria-expanded", String(!isExpanded));
-                captionCopy.classList.toggle("is-collapsed", isExpanded);
-                expand.textContent = isExpanded ? "Lire la suite" : "Réduire";
+                }
             });
-            caption.append(expand);
         }
-        if (lesson.hashtags.length) {
-            const hashtagList = createElement("div", "post-hashtags");
-            for (const tag of lesson.hashtags) {
-                hashtagList.append(createElement("span", "hashtag", tag));
-            }
-            caption.append(hashtagList);
-        }
-        post.append(header, caption, media, actions);
-        return post;
     }
 
-    function renderPosts() {
+    function createVideo(lesson, item, index) {
+        const video = document.createElement("video");
+        video.controls = true;
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = "none";
+        video.src = item.src;
+        if (item.poster) video.poster = item.poster;
+        video.setAttribute("aria-label", `Vidéo ${index + 1} de la leçon ${lesson.number}`);
+        observeVideo(video);
+        return video;
+    }
+
+    function createVideoLesson(lesson) {
+        const article = createElement("article", "video-lesson-card");
+        article.id = `video-lesson-${lesson.number}`;
+
+        const header = createElement("header", "video-lesson-header");
+        const heading = createElement("h2", "", `Leçon ${padNumber(lesson.number)} · ${lesson.title}`);
+        const videoItems = lesson.media.filter((item) => item.type === "video");
+        header.append(
+            heading,
+            createElement("span", "post-lesson-tag", `${videoItems.length} vidéo${videoItems.length === 1 ? "" : "s"}`),
+        );
+
+        const summary = createElement("p", "video-lesson-summary", lesson.caption);
+        const grid = createElement("div", "video-grid");
+        for (const [index, item] of videoItems.entries()) {
+            const figure = createElement("figure", "video-item");
+            figure.append(
+                createVideo(lesson, item, index),
+                createElement("figcaption", "", `Leçon ${padNumber(lesson.number)} · Vidéo ${index + 1}`),
+            );
+            grid.append(figure);
+        }
+
+        article.append(header, summary, grid);
+        return article;
+    }
+
+    function renderVideoLessons() {
         const query = searchState.query.trim().toLocaleLowerCase("fr");
-        const visibleLessons = lessons.filter((lesson) => {
+        const visibleLessons = videoLessons.filter((lesson) => {
             const searchableText = `${lesson.title} ${lesson.caption} ${lesson.hashtags.join(" ")}`.toLocaleLowerCase("fr");
             return !query || searchableText.includes(query);
         });
 
-        posts.replaceChildren(...visibleLessons.map(createPost));
+        videoLessonsContainer.replaceChildren(...visibleLessons.map(createVideoLesson));
         emptyState.hidden = visibleLessons.length > 0;
+        for (const item of lessonList.children) {
+            const number = Number(item.querySelector("a").hash.replace("#video-lesson-", ""));
+            item.hidden = !visibleLessons.some((lesson) => lesson.number === number);
+        }
+    }
+
+    videoObserver = "IntersectionObserver" in window
+        ? new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                const video = entry.target;
+                if (entry.isIntersecting && activeTab === "videos" && !document.hidden) {
+                    video.play().catch((error) => {
+                        if (error.name !== "AbortError") {
+                            console.warn("La lecture automatique de cette vidéo a été bloquée par le navigateur.", error);
+                        }
+                    });
+                } else {
+                    video.pause();
+                }
+            }
+        }, { threshold: 0.35 })
+        : null;
+
+    for (const [index, tab] of tabs.entries()) {
+        tab.addEventListener("click", () => setActiveTab(tab.id.replace("tab-", "")));
+        tab.addEventListener("keydown", (event) => {
+            let nextIndex;
+            if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+            if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+            if (event.key === "Home") nextIndex = 0;
+            if (event.key === "End") nextIndex = tabs.length - 1;
+            if (nextIndex !== undefined) {
+                event.preventDefault();
+                setActiveTab(tabs[nextIndex].id.replace("tab-", ""), true);
+            }
+        });
     }
 
     search.addEventListener("input", () => {
         searchState.query = search.value;
-        renderPosts();
+        renderVideoLessons();
+    });
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            for (const video of videoLessonsContainer.querySelectorAll("video")) video.pause();
+        }
     });
 
     renderNavigation();
-    renderPosts();
+    renderVideoLessons();
+    setActiveTab("basics");
 })();
