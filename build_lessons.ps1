@@ -16,7 +16,7 @@ $lessonTitles = @{
     5 = "La touche, la passe et le point de remise en jeu"
     6 = "Gagner du terrain et avancer " + $aGrave + " deux"
     7 = "Avancer " + $aGrave + " trois et la combinaison rapide"
-    8 = "Le 32 Peel (Bus) et le soutien arri" + $eGrave + "re"
+    8 = "Le 32 Peel (Bus) et le backdoor"
     9 = "La d" + $eAcute + "fense miroir et la d" + $eAcute + "fense ferm" + $eAcute + "e"
     10 = "Ratios en mixte et exclusions temporaires"
 }

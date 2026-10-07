@@ -103,12 +103,18 @@
             if (item.type === "video") {
                 const video = document.createElement("video");
                 video.controls = true;
+                video.autoplay = true;
+                video.loop = true;
+                video.muted = true;
                 video.playsInline = true;
                 video.preload = "metadata";
                 video.src = item.src;
                 if (item.poster) video.poster = item.poster;
                 video.setAttribute("aria-label", `Vidéo ${activeIndex + 1} de la leçon ${lesson.number}`);
                 media.append(video);
+                video.play().catch((error) => {
+                    console.warn("La lecture automatique de cette vidéo a été bloquée par le navigateur.", error);
+                });
             } else {
                 const image = document.createElement("img");
                 image.src = item.src;
