@@ -136,10 +136,16 @@ a {
 
 .lesson-list {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 4px;
     margin: 14px 0 0;
     padding: 0;
     list-style: none;
+}
+
+.lesson-list li,
+.lesson-link {
+    min-width: 0;
 }
 
 .lesson-link {
@@ -180,6 +186,8 @@ a {
 }
 
 .lesson-link-title {
+    min-width: 0;
+    flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
