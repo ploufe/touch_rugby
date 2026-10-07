@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f5ef">
+    <meta name="description" content="Les leçons de touch rugby, réunies dans un fil pour apprendre à son rythme.">
+    <title>Le vestiaire — Touch Rugby Classroom</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="lessons-data.js" defer></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="#" aria-label="Le vestiaire, accueil">
+            <span class="brand-mark" aria-hidden="true">↗</span>
+            <span class="brand-name">le vestiaire<span>.</span></span>
+        </a>
+        <p class="topbar-note">Le touch rugby, en clair.</p>
+        <a class="topbar-link" href="#fil">Explorer les leçons <span aria-hidden="true">↓</span></a>
+    </header>
+
+    <main class="page-layout">
+        <aside class="left-sidebar" aria-label="Navigation des leçons">
+            <div class="welcome-block">
+                <span class="eyebrow">TON ESPACE TOUCH</span>
+                <h1>Le jeu,<br>à ton rythme.</h1>
+                <p>Les leçons du terrain, rassemblées au même endroit.</p>
+            </div>
+
+            <nav class="lesson-nav" aria-label="Toutes les leçons">
+                <div class="nav-heading">
+                    <span>Le parcours</span>
+                    <span id="lesson-count" class="count-pill">10</span>
+                </div>
+                <ol id="lesson-list" class="lesson-list"></ol>
+            </nav>
+
+            <div class="sidebar-foot">
+                <span class="online-dot" aria-hidden="true"></span>
+                <span>Apprendre. Jouer. Recommencer.</span>
+            </div>
+        </aside>
+
+        <section class="feed-column" id="fil" aria-label="Fil des leçons">
+            <div class="feed-intro">
+                <div>
+                    <span class="eyebrow">TOUCH RUGBY CLASSROOM</span>
+                    <h2>Le fil du jeu<span class="title-period">.</span></h2>
+                    <p>Une idée à la fois. Directement sur le terrain.</p>
+                </div>
+                <span class="feed-badge"><span aria-hidden="true">✳</span> À toi de jouer</span>
+            </div>
+
+            <section class="stories-section" aria-label="Accès rapide aux leçons">
+                <div class="section-label"><span>Le parcours complet</span><span>Choisis ta leçon <span aria-hidden="true">→</span></span></div>
+                <div id="stories" class="stories"></div>
+            </section>
+
+            <div class="filter-bar" aria-label="Filtrer les leçons">
+                <div id="filters" class="filter-chips"></div>
+                <label class="search-box">
+                    <span class="search-icon" aria-hidden="true">⌕</span>
+                    <span class="visually-hidden">Rechercher une leçon</span>
+                    <input id="search" type="search" placeholder="Chercher..." autocomplete="off">
+                </label>
+            </div>
+
+            <div id="posts" class="posts" aria-live="polite"></div>
+            <p id="empty-state" class="empty-state" hidden>Aucune leçon ne correspond à ta recherche.</p>
+        </section>
+
+        <aside class="right-sidebar" aria-label="À propos du parcours">
+            <section class="about-card">
+                <span class="eyebrow">LE TOUCH, ENSEMBLE</span>
+                <h2>Comprendre<br>le jeu. <span>Vivre le jeu.</span></h2>
+                <p>Des bases aux stratégies d’équipe : retrouve ici chaque leçon de Touch Rugby Classroom.</p>
+                <a href="#fil">Voir le parcours <span aria-hidden="true">↗</span></a>
+                <span class="about-ball" aria-hidden="true">◉</span>
+            </section>
+
+            <section class="tip-card">
+                <span class="tip-icon" aria-hidden="true">✳</span>
+                <div>
+                    <span class="eyebrow">PETIT CONSEIL</span>
+                    <p>Une leçon, puis un entraînement. C’est sur le terrain que tout prend vie.</p>
+                </div>
+            </section>
+
+            <footer class="site-footer">
+                <span>UN SITE INDÉPENDANT</span>
+                <p>Fait pour apprendre le touch. Pas besoin de réseau social.</p>
+            </footer>
+        </aside>
+    </main>
+</body>
+</html>
