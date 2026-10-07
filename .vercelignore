@@ -1,0 +1,3 @@
+*.xz
+.github/
+build_lessons.ps1
